@@ -1,0 +1,15 @@
+$byweek = App\DailyReport::orderBy('date', 'asc')->get()
+
+        ->groupBy(function ($date) {
+            return Carbon::parse($date->date)->format('Y'); // grouping by years
+        })
+         ->map(function ($traffic) {
+            return $traffic->groupBy(function ($date) {
+                return Carbon::parse($date->date)->format('M'); // grouping by Months
+            })
+        ->map(function ($traffic) {
+            return $traffic->groupBy(function ($date) {
+                return Carbon::parse($date->date)->format('W'); // grouping by Weekly
+            });
+        });
+    });

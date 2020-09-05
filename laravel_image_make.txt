@@ -1,0 +1,9 @@
+if ($request->hasFile('photo')) {
+     $request->validate([
+      	'photo' => 'max:5120|mimes:jpeg,jpg,png',
+      ]);
+     $photo = $request->file('photo');
+ 
+     $photo_name = $rand . $id . '.' . $photo->getClientOriginalExtension();
+     Image::make($photo)->resize(850, 540)->save($path . $photo_name, 100);
+}
